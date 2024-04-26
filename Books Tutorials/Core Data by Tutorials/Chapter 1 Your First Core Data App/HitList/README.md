@@ -16,3 +16,55 @@ By the end of the chapter you’ll know how to:
 >- [x] A relationship is a link between multiple entities.
 >- [x] An NSManagedObject is a run-time representation of a Core Data entity. You can read and write to its attributes using Key-Value Coding.
 >- [x] You need an NSManagedObjectContext to save() or fetch(_:) data to and from Core Data.
+
+
+## Code
+
+```swift
+import CoreData
+```
+
+```swift
+var people = [NSManagedObject]()
+```
+
+```swift
+override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Person")
+        
+        do {
+            people = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print(error.userInfo)
+        }
+        
+    }
+```
+
+```swift
+func save(name:String) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Person", in: managedContext)!
+        let person = NSManagedObject(entity: entity, insertInto: managedContext)
+        person.setValue(name, forKey: "name") 
+        do {
+            try managedContext.save()
+            people.append(person)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+    }
+}
+```
+```swift
+cell.textLabel?.text = people[indexPath.row].value(forKeyPath: "name") as? String
+```
