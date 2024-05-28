@@ -1,5 +1,5 @@
-
 # Chapter 1: Your First Core Data App
+![HitList](https://github.com/mrgsdev/Various_Tutorials/assets/157994617/8149b081-cdd4-4388-863e-0a23149ef91c)
 
 By the end of the chapter you’ll know how to:
 >- [x] Model data using Xcode’s model editor
